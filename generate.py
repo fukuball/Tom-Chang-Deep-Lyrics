@@ -14,9 +14,9 @@ model_path = './model/Model' # The path of model that need to save or load
 save_time = 50 # Load save_time saved models
 is_sample = True # True means using sample, if not using max
 is_beams = True # Whether or not using beam search
-beam_size = 2 # Size of beam search
+beam_size = 3 # Size of beam search
 len_of_generation = 500 # The number of characters by generated
-start_sentence = u'雙手插口袋'
+start_sentence = u'如果'
 
 char_to_idx, idx_to_char = cPickle.load(open(model_path+'.voc', 'r'))
 
