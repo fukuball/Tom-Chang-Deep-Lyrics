@@ -10,6 +10,9 @@ config_tf.gpu_options.allow_growth = True
 config_tf.inter_op_parallelism_threads = 1
 config_tf.intra_op_parallelism_threads = 1
 
+if not os.path.exists('./model'):
+    os.makedirs('./model')
+
 model_path = './model/Model' # The path of model that need to save or load
 save_time = 50 # Load save_time saved models
 is_sample = True # True means using sample, if not using max
