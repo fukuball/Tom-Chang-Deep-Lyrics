@@ -22,6 +22,8 @@ is_beams = config.is_beams
 beam_size = config.beam_size
 len_of_generation = config.len_of_generation
 start_sentence = config.start_sentence
+if (len(sys.argv) == 2):
+    start_sentence = sys.argv[1].decode("utf-8")
 
 def run_epoch(session, m, data, eval_op, state=None):
     """Runs the model on the given data."""
