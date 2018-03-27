@@ -1,4 +1,4 @@
-# Tom-Chang-Deep-Lyrics | 基於 LSTM 深度學習方法研發而成的張雨生歌詞產生模型，致敬張雨生。
+# [Tom-Chang-Deep-Lyrics | 基於 LSTM 深度學習方法研發而成的張雨生歌詞產生模型，致敬張雨生。](https://blog.fukuball.com/ji-yu-lstm-shen-du-xue-xi-fang-fa-yan-fa-er-cheng-de-zhang-yu-sheng-ge-ci-chan-sheng-mo-xing-zhi-jing-zhang-yu-sheng/)
 
 之前看到〈[『致敬赵雷』基于TensorFlow让机器生成赵雷曲风的歌词](http://mp.weixin.qq.com/s/uYiq2knJ0rrzdpuvbdmWhw)〉這篇文章覺得非常有趣，因此一直都想自己動手試試看，中國有趙雷，那台灣要找什麼值得紀念的音樂人來作這個歌詞機器學習模型呢？我想[張雨生](https://zh.wikipedia.org/wiki/%E5%BC%B5%E9%9B%A8%E7%94%9F)應該會是台灣非常值得令人紀念的音樂人之一了。
 
