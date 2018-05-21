@@ -255,3 +255,26 @@ oh 不醉 就學不會
 
 以上就是這個「基於 LSTM 深度學習方法研發而成的張雨生歌詞產生模型」的實驗結果，產生的詞算是可讀，而且有些還蠻有意思的，比較大的問題是上下文的語意可能會不一致，這樣的問題目前也有很多論文在解了，大體上就是用多層的 LSTM，可以將句子為 level 做 Encode 之後做一層 LSTM，將段落為 level 做 Encode 之後做一層 LSTM，結合原本的字詞 level 的 LSTM 模型，應該就可以做出上下文語意一致的歌詞產生模型了，如果大家有做出來，別忘了分享一下啊！
 
+License
+=========
+The MIT License (MIT)
+
+Copyright (c) 2016 fukuball
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
