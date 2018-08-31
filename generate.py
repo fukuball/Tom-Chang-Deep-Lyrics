@@ -25,7 +25,10 @@ beam_size = config.beam_size
 len_of_generation = config.len_of_generation
 start_sentence = config.start_sentence
 if (len(sys.argv) == 2):
-    start_sentence = sys.argv[1]
+    if (sys.version_info > (3, 0)):
+        start_sentence = sys.argv[1]
+    else:
+        start_sentence = sys.argv[1].decode("utf-8")
 
 def run_epoch(session, m, data, eval_op, state=None):
     """Runs the model on the given data."""
@@ -134,7 +137,12 @@ def main(_):
                 beam_candidates.sort(key = lambda x:x[0], reverse = True) # decreasing order
                 beams = beam_candidates[:beam_size] # truncate to get new beams
 
-            print("Generated Result: {0}".format(beams[0][1]))
+            if (sys.version_info > (3, 0)):
+                print("Generated Result: {0}".format(beams[0][1]))
+            else:
+                print('Generated Result:')
+                print(''.join(beams[0][1]))
+
 
 if __name__ == "__main__":
     tf.app.run()

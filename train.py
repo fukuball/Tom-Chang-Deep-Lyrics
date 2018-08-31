@@ -16,7 +16,12 @@ config_tf.inter_op_parallelism_threads = 1
 config_tf.intra_op_parallelism_threads = 1
 
 file = sys.argv[1]
-data = open(file, encoding="utf-8").read()
+if (sys.version_info > (3, 0)):
+    data = open(file, encoding="utf-8").read()
+else:
+    data = open(file,'r').read()
+    data = data.decode('utf-8')
+
 chars = list(set(data)) #char vocabulary
 
 data_size, _vocab_size = len(data), len(chars)
