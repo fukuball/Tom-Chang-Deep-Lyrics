@@ -2,7 +2,8 @@
 import tensorflow as tf
 import sys,time
 import numpy as np
-import cPickle, os
+import pickle as cPickle
+import os
 import Config
 import Model
 
@@ -15,19 +16,18 @@ config_tf.inter_op_parallelism_threads = 1
 config_tf.intra_op_parallelism_threads = 1
 
 file = sys.argv[1]
-data = open(file,'r').read()
-data = data.decode('utf-8')
+data = open(file, encoding="utf-8").read()
 chars = list(set(data)) #char vocabulary
 
 data_size, _vocab_size = len(data), len(chars)
-print 'data has %d characters, %d unique.' % (data_size, _vocab_size)
+print ("data has {0} characters, {1} unique.".format(data_size, _vocab_size))
 char_to_idx = { ch:i for i,ch in enumerate(chars) }
 idx_to_char = { i:ch for i,ch in enumerate(chars) }
 
 config = Config.Config()
 config.vocab_size = _vocab_size
 
-cPickle.dump((char_to_idx, idx_to_char), open(config.model_path+'.voc','w'), protocol=cPickle.HIGHEST_PROTOCOL)
+cPickle.dump((char_to_idx, idx_to_char), open(config.model_path+'.voc','wb'), protocol=cPickle.HIGHEST_PROTOCOL)
 
 context_of_idx = [char_to_idx[ch] for ch in data]
 
@@ -93,9 +93,9 @@ def main(_):
             print("Epoch: %d Train Perplexity: %.3f" % (i + 1, train_perplexity))
 
             if (i+1) % config.save_freq == 0:
-                print 'model saving ...'
+                print ("model saving ...")
                 model_saver.save(session, config.model_path+'-%d'%(i+1))
-                print 'Done!'
+                print ("Done!")
 
 if __name__ == "__main__":
     tf.app.run()

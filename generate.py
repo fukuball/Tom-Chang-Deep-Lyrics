@@ -2,10 +2,12 @@
 import tensorflow as tf
 import sys,time
 import numpy as np
-import cPickle, os
+import pickle as cPickle
+import os
 import random
 import Config
 import Model
+import codecs
 
 config_tf = tf.ConfigProto()
 config_tf.gpu_options.allow_growth = True
@@ -14,7 +16,7 @@ config_tf.intra_op_parallelism_threads = 1
 
 config = Config.Config()
 
-char_to_idx, idx_to_char = cPickle.load(open(config.model_path+'.voc', 'r'))
+char_to_idx, idx_to_char = cPickle.load(open(config.model_path+'.voc', 'rb'))
 
 config.vocab_size = len(char_to_idx)
 is_sample = config.is_sample
@@ -23,7 +25,7 @@ beam_size = config.beam_size
 len_of_generation = config.len_of_generation
 start_sentence = config.start_sentence
 if (len(sys.argv) == 2):
-    start_sentence = sys.argv[1].decode("utf-8")
+    start_sentence = sys.argv[1]
 
 def run_epoch(session, m, data, eval_op, state=None):
     """Runs the model on the given data."""
@@ -46,9 +48,9 @@ def main(_):
         #tf.global_variables_initializer().run()
 
         model_saver = tf.train.Saver()
-        print 'model loading ...'
+        print("model loading ...")
         model_saver.restore(session, config.model_path+'-%d'%config.save_time)
-        print 'Done!'
+        print ("Done!")
 
         if not is_beams:
             # sentence state
@@ -58,7 +60,7 @@ def main(_):
             test_data = np.int32([start_idx])
             prob, _state = run_epoch(session, mtest, test_data, tf.no_op(), _state)
             gen_res = [char_list[0]]
-            for i in xrange(1, len(char_list)):
+            for i in range(1, len(char_list)):
                 char = char_list[i]
                 try:
                     char_index = char_to_idx[char]
@@ -83,7 +85,7 @@ def main(_):
                     gen = np.argmax(prob.reshape(-1))
                 test_data = np.int32(gen)
                 gen_res.append(idx_to_char[gen])
-            print 'Generated Result: ',''.join(gen_res)
+            print("Generated Result: {0}".format(gen_res))
         else:
             # sentence state
             char_list = list(start_sentence);
@@ -94,7 +96,7 @@ def main(_):
             prob, _state = run_epoch(session, mtest, test_data, tf.no_op(), _state)
             y1 = np.log(1e-20 + prob.reshape(-1))
             beams = [(beams[0][0], beams[0][1], beams[0][2], _state)]
-            for i in xrange(1, len(char_list)):
+            for i in range(1, len(char_list)):
                 char = char_list[i]
                 try:
                     char_index = char_to_idx[char]
@@ -111,7 +113,7 @@ def main(_):
                 top_indices = np.argsort(-y1)
             b = beams[0]
             beam_candidates = []
-            for i in xrange(beam_size):
+            for i in range(beam_size):
                 wordix = top_indices[i]
                 beam_candidates.append((b[0] + y1[wordix], b[1] + [idx_to_char[wordix]], wordix, _state))
             beam_candidates.sort(key = lambda x:x[0], reverse = True) # decreasing order
@@ -126,13 +128,13 @@ def main(_):
                         top_indices = np.random.choice(config.vocab_size, beam_size, replace=False, p=prob.reshape(-1))
                     else:
                         top_indices = np.argsort(-y1)
-                    for i in xrange(beam_size):
+                    for i in range(beam_size):
                         wordix = top_indices[i]
                         beam_candidates.append((b[0] + y1[wordix], b[1] + [idx_to_char[wordix]], wordix, _state))
                 beam_candidates.sort(key = lambda x:x[0], reverse = True) # decreasing order
                 beams = beam_candidates[:beam_size] # truncate to get new beams
 
-            print 'Generated Result: ',''.join(beams[0][1])
+            print("Generated Result: {0}".format(beams[0][1]))
 
 if __name__ == "__main__":
     tf.app.run()
